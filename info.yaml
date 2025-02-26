@@ -22,34 +22,82 @@ project:
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 pinout:
   # Inputs
-  ui[0]: ""
-  ui[1]: ""
-  ui[2]: ""
-  ui[3]: ""
-  ui[4]: ""
-  ui[5]: ""
-  ui[6]: ""
-  ui[7]: ""
+  ui[0]:
+    function: input
+    description: "Bit 0 of the 8-bit input"
+  ui[1]:
+    function: input
+    description: "Bit 1 of the 8-bit input"
+  ui[2]:
+    function: input
+    description: "Bit 2 of the 8-bit input"
+  ui[3]:
+    function: input
+    description: "Bit 3 of the 8-bit input"
+  ui[4]:
+    function: input
+    description: "Bit 4 of the 8-bit input"
+  ui[5]:
+    function: input
+    description: "Bit 5 of the 8-bit input"
+  ui[6]:
+    function: input
+    description: "Bit 6 of the 8-bit input"
+  ui[7]:
+    function: input
+    description: "Bit 7 of the 8-bit input"
 
   # Outputs
-  uo[0]: ""
-  uo[1]: ""
-  uo[2]: ""
-  uo[3]: ""
-  uo[4]: ""
-  uo[5]: ""
-  uo[6]: ""
-  uo[7]: ""
+  uo[0]:
+    function: output
+    description: "Bit 0 of the 8-bit output"
+  uo[1]:
+    function: output
+    description: "Bit 1 of the 8-bit output"
+  uo[2]:
+    function: output
+    description: "Bit 2 of the 8-bit output"
+  uo[3]:
+    function: output
+    description: "Bit 3 of the 8-bit output"
+  uo[4]:
+    function: output
+    description: "Bit 4 of the 8-bit output"
+  uo[5]:
+    function: output
+    description: "Bit 5 of the 8-bit output"
+  uo[6]:
+    function: output
+    description: "Bit 6 of the 8-bit output"
+  uo[7]:
+    function: output
+    description: "Bit 7 of the 8-bit output"
 
   # Bidirectional pins
-  uio[0]: ""
-  uio[1]: ""
-  uio[2]: ""
-  uio[3]: ""
-  uio[4]: ""
-  uio[5]: ""
-  uio[6]: ""
-  uio[7]: ""
+  uio[0]:
+    function: inout
+    description: "Bidirectional pin 0"
+  uio[1]:
+    function: inout
+    description: "Bidirectional pin 1"
+  uio[2]:
+    function: inout
+    description: "Bidirectional pin 2"
+  uio[3]:
+    function: inout
+    description: "Bidirectional pin 3"
+  uio[4]:
+    function: inout
+    description: "Bidirectional pin 4"
+  uio[5]:
+    function: inout
+    description: "Bidirectional pin 5"
+  uio[6]:
+    function: inout
+    description: "Bidirectional pin 6"
+  uio[7]:
+    function: inout
+    description: "Bidirectional pin 7"
 
 # Do not change!
 yaml_version: 6
