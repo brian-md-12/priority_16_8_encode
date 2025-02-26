@@ -43,8 +43,16 @@ module tt_um_priority_encoder(
         else if (In[0]) uo_out_reg = 8'd0;
     end
 
+        // Handle reset
+    always @(posedge clk or negedge rst_n) begin
+        if (!rst_n) begin
+            uo_out <= 8'b00000000; // Initialize output on reset
+        end else begin
+            uo_out <= uo_out_reg;  // Assign the intermediate register to the output
+        end
+    end
   // All output pins must be assigned. If not used, assign to 0.
-  assign uo_out  = uo_out_reg; // Assign the intermediate register to the output wire
+  //assign uo_out  = uo_out_reg; // Assign the intermediate register to the output wire
   assign uio_out = 0;
   assign uio_oe  = 0;
 
