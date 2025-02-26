@@ -16,28 +16,31 @@ module tt_um_priority_16_8_encode(
     input  wire       rst_n     // reset_n - low to reset
 );
 
-
+    reg [15:0] In; // Concatenated 16-bit input
     always @(*) begin
+        // Concatenate A and B into ui_in
+        In = {ui_in, uio_in};
+        
         // Default output for all inputs 0
         uo_out = 8'b11110000;
 
         // Priority encoding logic
-        if (ui_in[15]) uo_out = 8'd15;
-        else if (ui_in[14]) uo_out = 8'd14;
-        else if (ui_in[13]) uo_out = 8'd13;
-        else if (ui_in[12]) uo_out = 8'd12;
-        else if (ui_in[11]) uo_out = 8'd11;
-        else if (ui_in[10]) uo_out = 8'd10;
-        else if (ui_in[9]) uo_out = 8'd9;
-        else if (ui_in[8]) uo_out = 8'd8;
-        else if (ui_in[7]) uo_out = 8'd7;
-        else if (ui_in[6]) uo_out = 8'd6;
-        else if (ui_in[5]) uo_out = 8'd5;
-        else if (ui_in[4]) uo_out = 8'd4;
-        else if (ui_in[3]) uo_out = 8'd3;
-        else if (ui_in[2]) uo_out = 8'd2;
-        else if (ui_in[1]) uo_out = 8'd1;
-        else if (ui_in[0]) uo_out = 8'd0;
+        if (In[15]) uo_out = 8'd15;
+        else if (In[14]) uo_out = 8'd14;
+        else if (In[13]) uo_out = 8'd13;
+        else if (In[12]) uo_out = 8'd12;
+        else if (In[11]) uo_out = 8'd11;
+        else if (In[10]) uo_out = 8'd10;
+        else if (In[9]) uo_out = 8'd9;
+        else if (In[8]) uo_out = 8'd8;
+        else if (In[7]) uo_out = 8'd7;
+        else if (In[6]) uo_out = 8'd6;
+        else if (In[5]) uo_out = 8'd5;
+        else if (In[4]) uo_out = 8'd4;
+        else if (In[3]) uo_out = 8'd3;
+        else if (In[2]) uo_out = 8'd2;
+        else if (In[1]) uo_out = 8'd1;
+        else if (In[0]) uo_out = 8'd0;
     end
 
   // All output pins must be assigned. If not used, assign to 0.
