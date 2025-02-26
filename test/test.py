@@ -6,36 +6,39 @@ from cocotb.triggers import Timer
 
 @cocotb.test()
 async def test_priority_encoder(dut):
-    """Test the priority encoder functionality."""
+    """Test the priority encoder functionality for all possible input cases."""
 
-    dut._log.info("Starting priority encoder test")
+    dut._log.info("Starting exhaustive priority encoder test")
 
-    # Define test cases: (ui_in, uio_in, expected uo_out)
-    test_cases = [
-        # Test case 1: First logic 1 at bit 13
-        (0b00101010, 0b11110001, 0b00001101),  # ui_in = 00101010, uio_in = 11110001 → concatenated_input = 00101010_11110001 → first 1 at bit 13
-        # Test case 2: First logic 1 at bit 0
-        (0b00000000, 0b00000001, 0b00000000),  # ui_in = 00000000, uio_in = 00000001 → concatenated_input = 00000000_00000001 → first 1 at bit 0
-        # Test case 3: All bits are 0 (special case)
-        (0b00000000, 0b00000000, 0b11110000),  # ui_in = 00000000, uio_in = 00000000 → concatenated_input = 00000000_00000000 → special case
-    ]
+    # Iterate through all 16-bit input combinations (0 to 65535)
+    for i in range(65536):
+        # Split the 16-bit input into ui_in (upper 8 bits) and uio_in (lower 8 bits)
+        ui_in = (i >> 8) & 0xFF  # Upper 8 bits
+        uio_in = i & 0xFF        # Lower 8 bits
 
-    for ui_in, uio_in, expected in test_cases:
         # Set inputs ui_in and uio_in
         dut.ui_in.value = ui_in
         dut.uio_in.value = uio_in
 
-        # Wait for 1 time units to ensure values settle
-        await Timer(1, units="ns")
+        # Wait for 10 time units to ensure values settle
+        await Timer(10, units="ns")
 
-        # Check expected output
-       #assert dut.uo_out.value.integer == expected, f"Priority encoder failed: ui_in = {ui_in:08b}, uio_in = {uio_in:08b}, uo_out = {dut.uo_out.value.integer:08b}, expected {expected:08b}"
+        # Calculate the expected output
+        expected_output = 0b11110000  # Default output (all zeros)
+        for bit in range(15, -1, -1):
+            if (i >> bit) & 1:
+                expected_output = bit
+                break
 
-    #dut._log.info("Priority encoder test completed successfully")
-# Check expected output
+        # Check if the output matches the expected value
         if dut.uo_out.value.is_resolvable:
-            assert dut.uo_out.value.integer == expected, f"Priority encoder failed: ui_in = {ui_in:08b}, uio_in = {uio_in:08b}, uo_out = {dut.uo_out.value.integer:08b}, expected {expected:08b}"
+            assert dut.uo_out.value.integer == expected_output, (
+                f"Priority encoder failed: input = {i:016b}, "
+                f"uo_out = {dut.uo_out.value.integer:08b}, "
+                f"expected = {expected_output:08b}"
+            )
         else:
             dut._log.error(f"Unresolvable output: uo_out = {dut.uo_out.value.binstr}")
+            assert False, "Unresolvable output encountered, stopping test."
 
-    dut._log.info("Priority encoder test completed successfully")
+    dut._log.info("All 65,536 test cases passed!")
