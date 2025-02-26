@@ -36,7 +36,7 @@ module tt_um_priority_encoder(
         else if (In[7]) uo_out_reg = 8'd7;
         else if (In[6]) uo_out_reg = 8'd6;
         else if (In[5]) uo_out_reg = 8'd5;
-        else if (In[4]) uo_out = 8'd4;
+        else if (In[4]) uo_out_reg = 8'd4;
         else if (In[3]) uo_out_reg = 8'd3;
         else if (In[2]) uo_out_reg = 8'd2;
         else if (In[1]) uo_out_reg = 8'd1;
