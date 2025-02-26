@@ -25,8 +25,8 @@ async def test_priority_encoder(dut):
         dut.ui_in.value = ui_in
         dut.uio_in.value = uio_in
 
-        # Wait for 10 time units to ensure values settle
-        await Timer(10, units="ns")
+        # Wait for 1 time units to ensure values settle
+        await Timer(1, units="ns")
 
         # Check expected output
         assert dut.uo_out.value.integer == expected, f"Priority encoder failed: ui_in = {ui_in:08b}, uio_in = {uio_in:08b}, uo_out = {dut.uo_out.value.integer:08b}, expected {expected:08b}"
