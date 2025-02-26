@@ -16,35 +16,35 @@ module tt_um_priority_encoder(
     input  wire       rst_n     // reset_n - low to reset
 );
 
-    reg [15:0] In; // Concatenated 16-bit input
+    reg [7:0] uo_out_reg; // Intermediate register for uo_out
     always @(*) begin
         // Concatenate
-        In = {ui_in, uio_in};
+         reg [15:0] In = {ui_in, uio_in};// Concatenated 16-bit input
         
         // Default output for all inputs 0
-        uo_out = 8'b11110000;
+        uo_out_reg = 8'b11110000;
 
         // Priority encoding logic
-        if (In[15]) uo_out = 8'd15;
-        else if (In[14]) uo_out = 8'd14;
-        else if (In[13]) uo_out = 8'd13;
-        else if (In[12]) uo_out = 8'd12;
-        else if (In[11]) uo_out = 8'd11;
-        else if (In[10]) uo_out = 8'd10;
-        else if (In[9]) uo_out = 8'd9;
-        else if (In[8]) uo_out = 8'd8;
-        else if (In[7]) uo_out = 8'd7;
-        else if (In[6]) uo_out = 8'd6;
-        else if (In[5]) uo_out = 8'd5;
+        if (In[15]) uo_out_reg = 8'd15;
+        else if (In[14]) uo_out_reg = 8'd14;
+        else if (In[13]) uo_out_reg = 8'd13;
+        else if (In[12]) uo_out_reg = 8'd12;
+        else if (In[11]) uo_out_reg = 8'd11;
+        else if (In[10]) uo_out_reg = 8'd10;
+        else if (In[9]) uo_out_reg = 8'd9;
+        else if (In[8]) uo_out_reg = 8'd8;
+        else if (In[7]) uo_out_reg = 8'd7;
+        else if (In[6]) uo_out_reg = 8'd6;
+        else if (In[5]) uo_out_reg = 8'd5;
         else if (In[4]) uo_out = 8'd4;
-        else if (In[3]) uo_out = 8'd3;
-        else if (In[2]) uo_out = 8'd2;
-        else if (In[1]) uo_out = 8'd1;
-        else if (In[0]) uo_out = 8'd0;
+        else if (In[3]) uo_out_reg = 8'd3;
+        else if (In[2]) uo_out_reg = 8'd2;
+        else if (In[1]) uo_out_reg = 8'd1;
+        else if (In[0]) uo_out_reg = 8'd0;
     end
 
   // All output pins must be assigned. If not used, assign to 0.
-  //assign uo_out  = ui_in + uio_in;  // Example: ou_out is the sum of ui_in and uio_in
+  assign uo_out  = uo_out_reg; // Assign the intermediate register to the output wire
   assign uio_out = 0;
   assign uio_oe  = 0;
 
