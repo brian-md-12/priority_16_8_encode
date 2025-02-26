@@ -5,29 +5,33 @@ import cocotb
 from cocotb.triggers import Timer
 
 @cocotb.test()
-async def test_adder(dut):
-    """Test the 8-bit adder functionality."""
-    
-    dut._log.info("Starting adder test")
+async def test_priority_encoder(dut):
+    """Test the priority encoder functionality."""
 
-    # Define test cases: (ui_in, uio_in, expected output)
+    dut._log.info("Starting priority encoder test")
+
+    # Define test cases: (ui_in, expected uo_out)
     test_cases = [
-        (0, 0, 0),
-        (10, 15, 25),
-        (20, 30, 50),
-        (255, 1, 0),  # Overflow case (8-bit wrap-around)
-        (128, 128, 0) # Overflow case
+        # Test case 1: First logic 1 at bit 13
+        (0b0010101011110001, 0b00001101),  # 13 in decimal
+        # Test case 2: First logic 1 at bit 0
+        (0b0000000000000001, 0b00000000),  # 0 in decimal
+        # Test case 3: All bits are 0 (special case)
+        (0b0000000000000000, 0b11110000),  # Special case output
+        # Test case 4: First logic 1 at bit 7
+        (0b0000000010000000, 0b00000111),  # 7 in decimal
+        # Test case 5: First logic 1 at bit 15
+        (0b1000000000000000, 0b00001111),  # 15 in decimal
     ]
 
-    for ui_in, uio_in, expected in test_cases:
-        # Set inputs
+    for ui_in, expected in test_cases:
+        # Set input
         dut.ui_in.value = ui_in
-        dut.uio_in.value = uio_in
 
-        # Wait briefly to ensure values settle (not strictly needed for combinational logic)
-        await Timer(1, units="ns")
+        # Wait for 10 time units to ensure values settle
+        await Timer(10, units="ns")
 
         # Check expected output
-        assert dut.uo_out.value == expected, f"Adder failed: {ui_in} + {uio_in} = {dut.uo_out.value}, expected {expected}"
-    
-    dut._log.info("Adder test completed successfully")
+        assert dut.uo_out.value == expected, f"Priority encoder failed: ui_in = {ui_in:016b}, uo_out = {dut.uo_out.value:08b}, expected {expected:08b}"
+
+    dut._log.info("Priority encoder test completed successfully")
