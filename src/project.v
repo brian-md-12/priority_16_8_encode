@@ -18,7 +18,7 @@ module tt_um_project(
 
     reg [15:0] In; // Concatenated 16-bit input
     always @(*) begin
-        // Concatenate A and B into ui_in
+        // Concatenate
         In = {ui_in, uio_in};
         
         // Default output for all inputs 0
