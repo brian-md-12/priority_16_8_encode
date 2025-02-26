@@ -5,7 +5,7 @@ import cocotb
 from cocotb.triggers import Timer
 
 @cocotb.test()
-async def priority_16_8_encode(dut):
+async def test_priority_16_8_encode(dut):
     """Test the priority encoder functionality with concatenation."""
 
     dut._log.info("Starting priority encoder test with concatenation")
