@@ -39,4 +39,3 @@ async def test_priority_encoder(dut):
             dut._log.error(f"Unresolvable output: uo_out = {dut.uo_out.value.binstr}")
 
     dut._log.info("Priority encoder test completed successfully")
-
