@@ -16,10 +16,11 @@ module tt_um_priority_encoder(
     input  wire       rst_n     // reset_n - low to reset
 );
 
+    reg [15:0] In;
     reg [7:0] uo_out_reg; // Intermediate register for uo_out
     always @(*) begin
         // Concatenate
-         reg [15:0] In = {ui_in, uio_in};// Concatenated 16-bit input
+        In = {ui_in, uio_in};// Concatenated 16-bit input
         
         // Default output for all inputs 0
         uo_out_reg = 8'b11110000;
